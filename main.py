@@ -1,15 +1,15 @@
 import time
 from random import randint
 
-import pygame
+import pygame as pg
 
-pygame.init()
+pg.init()
 
-screen = pygame.display.set_mode((1792, 896), pygame.RESIZABLE)
+screen = pg.display.set_mode((1792, 896), pg.RESIZABLE)
 
-pygame.display.set_caption('snake Game')
-pygame.display.set_icon(pygame.image.load('icon.png'))
-appleIMG = pygame.image.load('apple.png')
+pg.display.set_caption('snake Game')
+pg.display.set_icon(pg.image.load('icon.png'))
+appleIMG = pg.image.load('apple.png')
 
 running = True
 game = True
@@ -50,21 +50,21 @@ def getGroundStartY():
 
 def gameOver():
     screen.fill((32, 149, 23))
-    screen.blit(pygame.image.load('gameOverpng.png'), (screen.get_width() // 2 - 640, screen.get_height() // 2 - 360))
+    screen.blit(pg.image.load('gameOverpng.png'), (screen.get_width() // 2 - 640, screen.get_height() // 2 - 360))
 
-    font = pygame.font.SysFont(None, 120)
+    font = pg.font.SysFont(None, 120)
     img = font.render(f'{size}', True, (0, 0, 0))
     screen.blit(img, (screen.get_width() // 2 - 640 + 759, screen.get_height() // 2 - 360 + 169))
 
-    font = pygame.font.SysFont(None, 120)
+    font = pg.font.SysFont(None, 120)
     img = font.render(f'{moves}', True, (0, 0, 0))
     screen.blit(img, (screen.get_width() // 2 - 640 + 759, screen.get_height() // 2 - 360 + 260))
 
     boolean = True
     while boolean:
-        pygame.display.update()
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+        pg.display.update()
+        for event in pg.event.get():
+            if event.type == pg.QUIT:
                 boolean = False
 
 start_time = time.time() - 0.5
@@ -73,24 +73,24 @@ while running:
     current_time = time.time()
     elapsed_time = current_time - start_time
 
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
+    for event in pg.event.get():
+        if event.type == pg.QUIT:
             running = False
 
-        if event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_UP:
+        if event.type == pg.KEYDOWN:
+            if event.key == pg.K_UP:
                 if not facing[0] == 0:
                     tempfacing = [0, -1]
 
-            if event.key == pygame.K_DOWN:
+            if event.key == pg.K_DOWN:
                 if not facing[0] == 0:
                     tempfacing = [0, 1]
 
-            if event.key == pygame.K_RIGHT:
+            if event.key == pg.K_RIGHT:
                 if not facing[1] == 0:
                     tempfacing = [1, 0]
 
-            if event.key == pygame.K_LEFT:
+            if event.key == pg.K_LEFT:
                 if not facing[1] == 0:
                     tempfacing = [-1, 0]
 
@@ -150,15 +150,15 @@ while running:
         screen.blit(appleIMG,
                     ((getGroundStartX() + applePos[0] * 32 + 1, getGroundStartY() + applePos[1] * 32 + 1), (getGroundStartX() + applePos[0] * 32 + 31, getGroundStartY() + applePos[1] * 32 + 31)))
 
-        surface = pygame.Surface((768, 768), pygame.SRCALPHA)
+        surface = pg.Surface((768, 768), pg.SRCALPHA)
         for i in range(1, size):
             # screen.fill((255, 0, 0), ((getGroundStartX() + seg.getGridX() + 1, getGroundStartY() + seg.getGridY() + 1), (31, 31)))
-            pygame.draw.line(surface, (255, 0, 0), [body[i].getGridX() + 15, body[i].getGridY() + 15], [body[i - 1].getGridX() + 15, body[i - 1].getGridY() + 15], 20)
+            pg.draw.line(surface, (255, 0, 0), [body[i].getGridX() + 15, body[i].getGridY() + 15], [body[i - 1].getGridX() + 15, body[i - 1].getGridY() + 15], 20)
         screen.blit(surface, ((getGroundStartX(), getGroundStartY()), (getGroundStartX() + 768, getGroundStartY() + 768)))
 
-        font = pygame.font.SysFont(None, 24)
+        font = pg.font.SysFont(None, 24)
         img = font.render(f'score: {size}   time: {moves},', True, (0, 0, 0))
         screen.blit(img, (getGroundStartX(), getGroundStartY() - 20))
 
         moves += 1
-        pygame.display.update()
+        pg.display.update()
